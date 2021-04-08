@@ -12,19 +12,34 @@ USE castleapi;
 -- );
 
 
-CREATE TABLE knights
+-- CREATE TABLE knights
+-- (
+--     id INT AUTO_INCREMENT,
+--     name VARCHAR(255) NOT NULL,
+--     height INT NOT NULL,
+--     age INT NOT NULL,
+--     gender VARCHAR(255) NOT NULL,
+--     castleId INT NOT NULL,
+
+
+--     PRIMARY KEY (id),
+
+--     FOREIGN KEY (castleId)
+--     REFERENCES castles (id)
+--     ON DELETE CASCADE
+-- );
+
+CREATE TABLE wifes
 (
     id INT AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    height INT NOT NULL,
     age INT NOT NULL,
-    gender VARCHAR(255) NOT NULL,
-    castleId INT NOT NULL,
-
+    skills VARCHAR(255) NOT NULL,
+    knightId INT NOT NULL,
 
     PRIMARY KEY (id),
 
-    FOREIGN KEY (castleId)
-    REFERENCES castles (id)
+    FOREIGN KEY (knightId)
+    REFERENCES knights (id)
     ON DELETE CASCADE
-);
+)
