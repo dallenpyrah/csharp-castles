@@ -40,10 +40,23 @@ namespace castles.Repository
             return newWife;
         }
 
-        internal object GetWifeByKnightId(int id)
+        internal IEnumerable<Wife> GetWifeByKnightId(int id)
         {
-            string sql = "SELECT * FROM wifes WHERE knightId = @id;";
-            return _db.Query<Wife>(sql, new { id });
+            // string sql = "SELECT * FROM wifes WHERE knightId = @id;";
+            // return _db.Query<Wife>(sql, new { id });
+            string sql =  @"
+            SELECT 
+            w.*,
+            k.*
+            FROM wifes w
+            JOIN knights k ON w.knightId = k.id
+            WHERE knightId = @id;";
+
+            return _db.Query<Wife, Knight, Wife>(sql, (wife, knight) => 
+            {
+                wife.Knight = knight;
+                return wife;
+            }, new { id }, splitOn : "id");
         }
 
         internal Wife EditWife(Wife current)

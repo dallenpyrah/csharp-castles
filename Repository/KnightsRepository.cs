@@ -41,8 +41,21 @@ namespace castles.Repository
 
         internal IEnumerable<Knight> GetAllKnightsByCastleid(int id)
         {
-            string sql = "SELECT * FROM knights WHERE castleId = @id;";
-            return _db.Query<Knight>(sql, new { id });
+            // string sql = "SELECT * FROM knights WHERE castleId = @id;";
+            // return _db.Query<Knight>(sql, new { id });
+
+            string sql = @"
+            SELECT
+            k.*,
+            c.*
+            FROM knights k
+            JOIN castles c ON k.castleId = c.id
+            WHERE castleId = @id;";
+
+            return _db.Query<Knight, Castle, Knight>(sql, (knight, castle) => {
+                knight.Castle = castle;
+                return knight;
+            }, new { id }, splitOn: "id");
         }
 
         internal Knight EditKnight(Knight current)

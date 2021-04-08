@@ -11,5 +11,7 @@ namespace castles.Models
         public int Id { get; set; }
 
         public int KnightId { get; set; }
+
+        public Knight Knight { get; set; }
     }
 }

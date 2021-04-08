@@ -13,5 +13,7 @@ namespace castles.Models
         public string Gender { get; set; }
 
         public int CastleId { get; set; }
+
+        public Castle Castle { get; set; }
     }
 }
