@@ -8,34 +8,19 @@ namespace castles.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class KnightsController : ControllerBase
+    public class WifesController : ControllerBase
     {
+        private readonly WifesService _service;
+        private readonly KnightsService _knightsService;
 
-        private readonly KnightsService _service;
-
-        private readonly WifesService _wifeService;
-
-        public KnightsController(KnightsService service, WifesService wifeService)
+        public WifesController(WifesService service, KnightsService knightsService)
         {
             _service = service;
-            _wifeService = wifeService;
-        }
-
-        [HttpGet("{id}/wifes")]
-        public ActionResult<IEnumerable<Wife>> GetWifesByKnightId(int id)
-        {
-            try
-            {
-                return Ok(_wifeService.GetWifeByKnightId(id));
-            }
-            catch (System.Exception err)
-            {
-                return BadRequest(err.Message);
-            }
+            _knightsService = knightsService;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Knight>> GetAll()
+        public ActionResult<IEnumerable<Wife>> GetAll()
         {
             try
             {
@@ -47,21 +32,8 @@ namespace castles.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult<Knight> CreateKnight([FromBody] Knight newKnight)
-        {
-            try
-            {
-                return Ok(_service.CreateKnight(newKnight));
-            }
-            catch (System.Exception err)
-            {
-                return BadRequest(err.Message);
-            }
-        }
-
         [HttpGet("{id}")]
-        public ActionResult<Knight> GetOneById(int id)
+        public ActionResult<Wife> GetOneById(int id)
         {
             try
             {
@@ -73,13 +45,26 @@ namespace castles.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public ActionResult<Knight> EditKnight(int id, [FromBody] Knight editKnight)
+        [HttpPost]
+        public ActionResult<Wife> CreateWife([FromBody] Wife newWife)
         {
             try
             {
-                editKnight.Id = id;
-                return Ok(_service.EditKnight(editKnight));
+                return Ok(_service.CreateWife(newWife));
+            }
+            catch (System.Exception err)
+            {
+                return BadRequest(err.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult<Wife> EditWife(int id, [FromBody] Wife editedWife)
+        {
+            try
+            {
+                editedWife.Id = id;
+                return Ok(_service.EditWife(editedWife));
             }
             catch (System.Exception err)
             {
@@ -88,11 +73,11 @@ namespace castles.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Knight> DeleteKnight(int id)
+        public ActionResult<Wife> DeleteWife(int id)
         {
             try
             {
-                return Ok(_service.DeleteKnight(id));
+                return Ok(_service.DeleteWife(id));
             }
             catch (System.Exception err)
             {

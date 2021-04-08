@@ -40,6 +40,8 @@ namespace castles
             services.AddTransient<CastlesRepository>();
             services.AddTransient<KnightsRepository>();
             services.AddTransient<KnightsService>();
+            services.AddTransient<WifesRepository>();
+            services.AddTransient<WifesService>();
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
         }
 
